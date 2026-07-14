@@ -16,9 +16,7 @@ El sistema a desarrollar es una aplicación web cliente-servidor que permite la 
 
 ## Modelo de dominio
 
-<img width="882" height="924" alt="tp-java-blueberry" src="https://github.com/user-attachments/assets/9fb4d922-88e8-4d4d-a7d8-d2edbbd9f5c4" />
-
-
+<img width="752" height="843" alt="tp-java-blueberry (1)" src="https://github.com/user-attachments/assets/9e6c34f0-a9bc-4a99-9de8-1dfc90c96dd1" />
 
 ## Checklist
 

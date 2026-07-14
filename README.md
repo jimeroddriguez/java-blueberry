@@ -37,6 +37,6 @@ El sistema a desarrollar es una aplicación web cliente-servidor que permite la 
 | Requerimiento | Detalle |
 | :--- | :--- |
 | **ABMC** | 1. Usuario<br>2. Administrador<br>3. Cliente<br>4. Empleado<br>5. Servicio<br>6. Promoción<br>7. Reserva |
-| **CU "Complejo"**(nivel resumen) | 1. CUR Realizar reserva (CUU Cancelar reserva)<br>2. CUR Establecer promoción |
+| **CU "Complejo"**(nivel resumen) | 1. CUR Establecer promoción |
 | **Listado complejo** | 1. Listado de horarios posibles para reserva => filtrado por servicio y por horarios disponibles de los empleados |
 | **Nivel de acceso** | 1. Usuario<br>2. Empleado<br>3. Administrador |

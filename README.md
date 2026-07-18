@@ -16,7 +16,7 @@ El sistema a desarrollar es una aplicación web cliente-servidor que permite la 
 
 ## Modelo de dominio
 
-<img width="752" height="843" alt="tp-java-blueberry (1)" src="https://github.com/user-attachments/assets/9e6c34f0-a9bc-4a99-9de8-1dfc90c96dd1" />
+<img width="751" height="815" alt="java" src="https://github.com/user-attachments/assets/65b70428-eca3-400c-b939-fb54949c7607" />
 
 ## Checklist
 
@@ -35,6 +35,6 @@ El sistema a desarrollar es una aplicación web cliente-servidor que permite la 
 | Requerimiento | Detalle |
 | :--- | :--- |
 | **ABMC** | 1. Usuario<br>2. Administrador<br>3. Cliente<br>4. Empleado<br>5. Servicio<br>6. Promoción<br>7. Reserva |
-| **CU "Complejo"**(nivel resumen) | 1. CUR Establecer promoción |
+| **CU "Complejo"**(nivel resumen) | 1. CUR Establecer promoción <br> 2. CUR Gestión completa del turno (CUU1: Reservar Turno, CUU2: Consultar Turno, CUU3: Cancelar Turno, CUU4: Reprogramar Turno, CUU5: Registrar asistencia)|
 | **Listado complejo** | 1. Listado de horarios posibles para reserva => filtrado por servicio y por horarios disponibles de los empleados |
 | **Nivel de acceso** | 1. Usuario<br>2. Empleado<br>3. Administrador |

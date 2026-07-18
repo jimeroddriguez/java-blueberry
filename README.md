@@ -4,7 +4,7 @@
 
 ### Propuesta TP - Lenguaje de Programación Java
 
-## Integrantes
+## Integrante
 
 | Legajo | Apellido y Nombre |
 |--------|-------------------|
@@ -16,7 +16,7 @@ El sistema a desarrollar es una aplicación web cliente-servidor que permite la 
 
 ## Modelo de dominio
 
-<img width="751" height="815" alt="java" src="https://github.com/user-attachments/assets/65b70428-eca3-400c-b939-fb54949c7607" />
+<img width="751" height="792" alt="java-fin" src="https://github.com/user-attachments/assets/5c97660c-c7d4-4fb0-a623-147e7cb03069" />
 
 ## Checklist
 

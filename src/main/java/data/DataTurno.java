@@ -1,14 +1,17 @@
 package data;
 
-import entities.Turno;
+import java.time.LocalDate;
+
+import entities.*;
 
 public class DataTurno {
 
-	public Turno reservarServPorProf() {
+	public Turno reservarServPorHor() {
 		return null;
 	}
 
-	public Turno reservarServPorHor() {
+	public Turno reservarServicioPorProfesional(Empleado emp, Servicio serv, Horario h, LocalDate fecha) {
+		
 		return null;
 	}
 

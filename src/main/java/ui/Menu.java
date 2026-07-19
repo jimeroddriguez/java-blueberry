@@ -1,7 +1,9 @@
 package ui;
 
+import java.time.*;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.*;
-
 import entities.*;
 import logic.*;
 
@@ -10,6 +12,9 @@ public class Menu {
 	Login ctrlLogin = new Login();
 	AbmcServicio abmcServicio = new AbmcServicio();
 	AbmcTurno abmcTurno = new AbmcTurno();
+	AbmcEmpleado abmcEmpleado = new AbmcEmpleado();
+	AbmcHorario abmcHorario = new AbmcHorario();
+	final private String dateFormat = "dd/MM/yyyy";
 	
 	public void start() {
 		lector = new Scanner(System.in);
@@ -64,27 +69,43 @@ public class Menu {
 	}
 
 	private Turno reservarServicio() {
-
+		Horario h = null;
+		LocalDate f = null;
 		System.out.println("¿Qué tipo de servicio desea realizarse?");
 		System.out.println(listadoServicios());
 		
 		System.out.println("Elija tipo de servicio por id: ");
 		Servicio serv = new Servicio();
 		serv.setIdservicios(Integer.parseInt(lector.nextLine()));
-		serv = abmcServicio.buscarPorID(serv);
+		serv = abmcServicio.getByID(serv);
 		System.out.println("El servicio que usted eligió es: "+serv.getNombre()+", " +serv.getDescripcion());
 		
-		System.out.println("Qué prefieres, elegir el servicio"
+		System.out.println("Qué prefieres, realizar la reserva del turno"
 				+ "1 - por profesional"
-				+ "2- por horario?");
+				+ "2 - por horario?");
 		int tipoReserva = Integer.parseInt(lector.nextLine());
-		
 		Turno turno = null;
 		
 		if(tipoReserva == 1){
+			System.out.println("Lista de empleados");
 			ArrayList<Empleado> empleados = abmcTurno.mostrarEmpleadosPorServicio(serv); // arreglar query
 			System.out.println(empleados);
-			turno = abmcTurno.reservarServicioPorProfesional();
+			
+			System.out.println("Elegir empleado por id");
+			Empleado emp = new Empleado();
+			emp.setIdusuario(Integer.parseInt(lector.nextLine()));
+			emp = abmcEmpleado.getEmpleadoPorID(emp);
+			
+			System.out.println("Mostrar horarios del empleado");
+			ArrayList<Horario> horarios = abmcHorario.getHorariosPorIdEmpleado(emp);
+			System.out.println("Horarios disponibles: ");
+			System.out.println(horarios);
+			
+			h = getHorarioByID(horarios);
+			f = validarFecha(h);
+			
+			turno = abmcTurno.reservarServicioPorProfesional(emp, serv, h, f);
+			
 		}else if(tipoReserva == 2){
 			turno = abmcTurno.reservarServicioPorHorario();
 		}
@@ -92,6 +113,51 @@ public class Menu {
 	}
 
 
+	private Horario getHorarioByID(ArrayList<Horario> horarios) {
+		System.out.println("Horarios disponibles: ");
+		System.out.println(horarios);
+		
+		Horario h = null;
+		System.out.println("Elegir horario por ID: ");
+		int idHorarioEleccion = Integer.parseInt(lector.nextLine());
+		for (Horario hr : horarios) {
+		    if (hr.getIdHorario() == idHorarioEleccion) {
+		        h = hr;
+		        break;
+		    }
+		}
+		if (h == null) {
+		    System.out.println("Horario inválido.");
+		}
+		return h;
+	}
+
+	private LocalDate validarFecha(Horario h) {
+		LocalDate fecha = null;
+		System.out.println("Ingrese la fecha del turno ("+dateFormat+"): ");
+		DateTimeFormatter dFormat = DateTimeFormatter.ofPattern(dateFormat);
+		do {
+			try{
+				fecha = LocalDate.parse(lector.nextLine(), dFormat);
+			}catch(DateTimeParseException e) {
+				System.out.println("Formato de fecha inválido");
+			}
+		}while(fecha==null);
+		
+		if (fecha.getDayOfWeek().getValue() != h.getDay()) {
+		    System.out.println("La fecha elegida no coincide con el día de este horario (" + h + ")");
+		    fecha = null;
+		    
+		}
+		if (fecha.isBefore(LocalDate.now())) {
+		    System.out.println("No se pueden reservar turnos en fechas pasadas");
+		    fecha = null;
+		}
+		return fecha;
+	}
+	
+	
+	
 	private String mostrarOpcionesCliente() {
 		System.out.println("________________________________________");
 		System.out.println("|                                       |");
@@ -156,7 +222,7 @@ public class Menu {
 	
 	public ArrayList<Servicio> listadoServicios() {
 		System.out.println("LISTA DE SERVICIOS: ");
-		return abmcServicio.listar();
+		return abmcServicio.getAll();
 	}
 
 

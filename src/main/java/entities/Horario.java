@@ -65,8 +65,8 @@ public class Horario {
 	}
 	@Override
 	public String toString() {
-		return "\nHorario [idHorario=" + idHorario + ", empleado=" + empleado + ", dia=" + nombredeldia(day) + ", horaInicio="
-				+ horaInicio + ", horaFin=" + horaFin + "]";
+		return "\nHorario [idHorario = " + idHorario + ", empleado=" + empleado + ", dia=" + nombredeldia(day) + ", | "
+				+ horaInicio + " hasta " + horaFin + "]";
 	}
 	
 	

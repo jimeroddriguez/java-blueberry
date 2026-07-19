@@ -11,11 +11,11 @@ public class AbmcServicio {
 		ds = new DataServicio();
 	}
 	
-	public ArrayList<Servicio> listar(){
-		return ds.listServicio();
+	public ArrayList<Servicio> getAll(){
+		return ds.getAll();
 	}
 
-	public Servicio buscarPorID(Servicio serv) {
-		return ds.getServicioByID(serv);
+	public Servicio getByID(Servicio serv) {
+		return ds.getByID(serv);
 	}
 }

@@ -6,7 +6,7 @@ import entities.*;
 
 public class DataServicio {
 
-	public ArrayList<Servicio> listServicio() {			
+	public ArrayList<Servicio> getAll() {			
 			Statement stmt = null;
 			ResultSet rs = null;
 			ArrayList<Servicio> servicios = new ArrayList<Servicio>();
@@ -40,7 +40,7 @@ public class DataServicio {
 			return servicios;
 		}
 
-	public Servicio getServicioByID(Servicio serv) {
+	public Servicio getByID(Servicio serv) {
 			
 		PreparedStatement stmt = null;
 		ResultSet rs = null;

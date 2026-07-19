@@ -1,6 +1,7 @@
 package data;
 
 import java.sql.*;
+
 import java.util.*;
 import entities.*;
 
@@ -44,6 +45,40 @@ public class DataEmpleado {
 		}
 		return null;
 	}
+
 	
+	public Empleado getById(Empleado emp) {
+		Empleado empleado = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		try {
+			stmt = DbConnector.getInstancia().getConn().prepareStatement(
+					"select idusuario, puesto, legajo, nombre, apellido from empleado where idusuario =?");
+			stmt.setInt(1, emp.getIdusuario());
+			rs = stmt.executeQuery();
+			
+			if(rs.next() && rs!=null) {
+				empleado = new Empleado();
+				empleado.setIdusuario(rs.getInt("idservicios"));
+				empleado.setPuesto(rs.getString("puesto"));
+				empleado.setLegajo(rs.getInt("legajo"));
+				empleado.setNombre(rs.getString("nombre"));
+				empleado.setApellido(rs.getString("apellido"));
+			}
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(rs!=null)rs.close();
+				if(stmt!=null)stmt.close();
+				DbConnector.getInstancia().releaseConn();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	
+	return empleado;
+	}
+		
 }

@@ -1,5 +1,6 @@
 package logic;
 
+import java.time.LocalDate;
 import java.util.*;
 import data.*;
 import entities.*;
@@ -13,8 +14,8 @@ public class AbmcTurno {
 		de = new DataEmpleado();
 	}
 	
-	public Turno reservarServicioPorProfesional() {
-		return dt.reservarServPorProf();
+	public Turno reservarServicioPorProfesional(Empleado emp, Servicio serv, Horario h, LocalDate fecha) {
+		return dt.reservarServicioPorProfesional(emp, serv, h, fecha);
 	}
 	
 	public Turno reservarServicioPorHorario() {

@@ -1,6 +1,8 @@
 package data;
 
 import java.sql.*;
+import java.time.LocalDate;
+
 import entities.*;
 
 
@@ -13,7 +15,7 @@ public class DataUser {
 		
 		try {
 			stmt = DbConnector.getInstancia().getConn().prepareStatement(
-					"select email, password, nombre, apellido, idusuario from usuario where email = ? and password = ?");
+					"select email, password, nombre, apellido, idusuario, fecha_nacimiento from usuario where email = ? and password = ?");
 			stmt.setString(1, u.getEmail());
 			stmt.setString(2, u.getPassword());
 			rs = stmt.executeQuery();
@@ -25,8 +27,9 @@ public class DataUser {
 				user.setPassword(rs.getString("password"));
 				user.setNombre(rs.getString("nombre"));
 				user.setApellido(rs.getString("apellido"));
-				//user.setFechaNac(rs.getDate("fecha_nacimiento"));
+				user.setFecha_nacimiento(rs.getObject("fecha_nacimiento", LocalDate.class));
 			}
+			
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}finally {

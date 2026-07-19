@@ -1,7 +1,7 @@
 package data;
 
 import java.sql.*;
-
+import java.time.LocalDate;
 import java.util.*;
 import entities.*;
 
@@ -28,6 +28,7 @@ public class DataEmpleado {
 					emp.setLegajo(rs.getInt("legajo"));
 					emp.setNombre(rs.getString("nombre"));
 					emp.setApellido(rs.getString("apellido"));
+					emp.setFecha_nacimiento(rs.getObject("fecha_nacimiento", LocalDate.class));
 					
 					empleados.add(emp);
 				}
@@ -46,7 +47,6 @@ public class DataEmpleado {
 		return null;
 	}
 
-	
 	public Empleado getById(Empleado emp) {
 		Empleado empleado = null;
 		PreparedStatement stmt = null;
@@ -54,7 +54,7 @@ public class DataEmpleado {
 		
 		try {
 			stmt = DbConnector.getInstancia().getConn().prepareStatement(
-					"select idusuario, puesto, legajo, nombre, apellido from empleado where idusuario =?");
+					"select idusuario, puesto, legajo, nombre, apellido, fecha_nacimiento from empleado where idusuario =?");
 			stmt.setInt(1, emp.getIdusuario());
 			rs = stmt.executeQuery();
 			
@@ -65,6 +65,7 @@ public class DataEmpleado {
 				empleado.setLegajo(rs.getInt("legajo"));
 				empleado.setNombre(rs.getString("nombre"));
 				empleado.setApellido(rs.getString("apellido"));
+				empleado.setFecha_nacimiento(rs.getObject("fecha_nacimiento", LocalDate.class));
 			}
 		}catch (SQLException e) {
 			e.printStackTrace();

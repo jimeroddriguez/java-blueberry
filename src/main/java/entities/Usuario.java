@@ -1,11 +1,14 @@
 package entities;
 
+import java.time.LocalDate;
+
 public class Usuario {
 	private int idusuario;
 	private String email;
 	private String password;
 	private String nombre;
 	private String apellido;
+	private LocalDate fecha_nacimiento;
 
 	public int getIdusuario() {
 		return idusuario;
@@ -67,10 +70,17 @@ public class Usuario {
 		return detalle;
 	}
 	
+	public LocalDate getFecha_nacimiento() {
+		return fecha_nacimiento;
+	}
+	public void setFecha_nacimiento(LocalDate fecha_nacimiento) {
+		this.fecha_nacimiento = fecha_nacimiento;
+	}
+	
 	@Override
 	public String toString() {
-		return "\nUsuario [idusuario=" + idusuario + ", email=" + email + ", nombre=" + nombre + ", apellido=" + apellido
-				+ "]";
+		return "Usuario [idusuario=" + idusuario + ", email=" + email + ", nombre=" + nombre + ", apellido=" + apellido
+				+ ", fecha_nacimiento=" + fecha_nacimiento + "]";
 	}
 	
 	

@@ -82,7 +82,7 @@ public class Menu {
 		Turno turno = null;
 		
 		if(tipoReserva == 1){
-			ArrayList<Empleado> empleados = abmcTurno.mostrarEmpleadosPorServicio(serv);
+			ArrayList<Empleado> empleados = abmcTurno.mostrarEmpleadosPorServicio(serv); // arreglar query
 			System.out.println(empleados);
 			turno = abmcTurno.reservarServicioPorProfesional();
 		}else if(tipoReserva == 2){

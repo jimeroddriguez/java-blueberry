@@ -8,6 +8,8 @@ import logic.*;
 public class Menu {
 	Scanner lector = null;
 	Login ctrlLogin = new Login();
+	AbmcServicio abmcServicio = new AbmcServicio();
+	AbmcTurno abmcTurno = new AbmcTurno();
 	
 	public void start() {
 		lector = new Scanner(System.in);
@@ -17,7 +19,13 @@ public class Menu {
 			System.out.println("TU ROL EN LA PÁGINA ES: " + u.getDefClase());
 			String opc;
 			do {
-				opc = mostrarOpciones();
+				if (u.getDefClase().equals("Empleado")){
+					opc = mostrarOpcionesEmpleado();
+				}else if(u.getDefClase().equals("Administrador")) {
+					opc = mostrarOpcionesAdmin();
+				}else {
+					opc = mostrarOpcionesCliente();
+				}
 				ejecutarOpcion(opc);
 			}while (!opc.trim().equalsIgnoreCase("g"));
 		}else {
@@ -26,10 +34,11 @@ public class Menu {
 	lector.close();
 	}
 
+
 	private void ejecutarOpcion(String opc) {
 		switch(opc) {
 		case "a":
-			System.out.println("opcion a");
+			System.out.println(reservarServicio());
 			break;
 		case "b":
 			System.out.println("opcion b");
@@ -54,22 +63,86 @@ public class Menu {
 		}
 	}
 
-	private String mostrarOpciones() {
+	private Turno reservarServicio() {
+
+		System.out.println("¿Qué tipo de servicio desea realizarse?");
+		System.out.println(listadoServicios());
+		
+		System.out.println("Elija tipo de servicio por id: ");
+		Servicio serv = new Servicio();
+		serv.setIdservicios(Integer.parseInt(lector.nextLine()));
+		serv = abmcServicio.buscarPorID(serv);
+		System.out.println("El servicio que usted eligió es: "+serv.getNombre()+", " +serv.getDescripcion());
+		
+		System.out.println("Qué prefieres, elegir el servicio"
+				+ "1 - por profesional"
+				+ "2- por horario?");
+		int tipoReserva = Integer.parseInt(lector.nextLine());
+		
+		Turno turno = null;
+		
+		if(tipoReserva == 1){
+			ArrayList<Empleado> empleados = abmcTurno.mostrarEmpleadosPorServicio(serv);
+			System.out.println(empleados);
+			turno = abmcTurno.reservarServicioPorProfesional();
+		}else if(tipoReserva == 2){
+			turno = abmcTurno.reservarServicioPorHorario();
+		}
+		return turno;
+	}
+
+
+	private String mostrarOpcionesCliente() {
 		System.out.println("________________________________________");
 		System.out.println("|                                       |");
 		System.out.println("|                MENU                   |");
-		System.out.println("|      a.   			                |");
-		System.out.println("|      b.   					        |");
-		System.out.println("|      c.   				            |");
-		System.out.println("|      d.   				            |");
-		System.out.println("|      e.   		                    |");
-		System.out.println("|      f.   				            |");
-		System.out.println("|      g.   Salir                       |");
+		System.out.println("|      a. Reservar servicio				|");
+		System.out.println("|      b. Listado de reservas			|");
+		System.out.println("|      c. Consultar turno				|");
+		System.out.println("|      d. Cancelar turno				|");
+		System.out.println("|      e. Reprogramar turno				|");
+		System.out.println("|      f. Mostrar Servicios				|");
+		System.out.println("|      g. Salir				   			|");
+		System.out.println("|                                       |");
+		System.out.println("|_______________________________________|");
+		System.out.println();
+		return lector.nextLine();
+	}	
+	
+	private String mostrarOpcionesAdmin() {
+			System.out.println("________________________________________");
+			System.out.println("|                                       |");
+			System.out.println("|                MENU                   |");
+			System.out.println("|      a. Reservar servicio		        |");
+			System.out.println("|      b. Listado de reservas			|");
+			System.out.println("|      c. Consultar turno				|");
+			System.out.println("|      d. Cancelar turno				|");
+			System.out.println("|      e. Reprogramar turno				|");
+			System.out.println("|      f. Registrar asistencia			|");
+			System.out.println("|      g. Salir       	                |");
+			System.out.println("|                                       |");
+			System.out.println("|_______________________________________|");
+			System.out.println();
+			return lector.nextLine();
+	}
+
+	private String mostrarOpcionesEmpleado() {
+		System.out.println("________________________________________");
+		System.out.println("|                                       |");
+		System.out.println("|                MENU                   |");
+		System.out.println("|      a. Reservar servicio		        |");
+		System.out.println("|      b. Listado de reservas			|");
+		System.out.println("|      c. Consultar turno				|");
+		System.out.println("|      d. Cancelar turno				|");
+		System.out.println("|      e. Reprogramar turno				|");
+		System.out.println("|      f. Registrar asistencia			|");
+		System.out.println("|      g. Salir				   			|");
 		System.out.println("|                                       |");
 		System.out.println("|_______________________________________|");
 		System.out.println();
 		return lector.nextLine();
 	}
+
 
 	public Usuario login() {
 		Usuario u = new Usuario();
@@ -80,7 +153,11 @@ public class Menu {
 		u.setPassword(lector.nextLine());
 		return ctrlLogin.validar(u);
 	}
-
+	
+	public ArrayList<Servicio> listadoServicios() {
+		System.out.println("LISTA DE SERVICIOS: ");
+		return abmcServicio.listar();
+	}
 
 
 
